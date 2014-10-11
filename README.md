@@ -18,9 +18,9 @@ This project will create a Nametag app to find [group fantasy words](http://book
 
 The #memes channel on DALnet was once a hotbed of bizzare ideas.  One we actually followed through was the Fnord-O-Meter, specced by channel users and written by yegs.  
 
-The date on a copy of a copy of a copy of the original page is 1/5/2007, and that seems miraculously right.
+The date on 5th-gen copy of the original html file is 1/5/07.  Miraculously, that sounds right. 
 
-There was an early version of a jQuery-based Fnord-O-Meter in 2011 or so, but that code was lost.  This is also sort of a do-over of the AJAXY upgrade.
+There was an early version of a jQuery-based Fnord-O-Meter in 2011 or so, but that code was lost.  This is a do-over-do-better of the AJAXish upgrade.
 
 ##### Planned Features
 
