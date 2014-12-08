@@ -1,0 +1,377 @@
+
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN'
+'http://www.w3.org/TR/xhtmll/DTD/xhtmll-transitional.dtd'>
+
+<html xmlns='http://www.w3.org/1999/xhtml'>
+
+<head>
+
+    <title>Protype Fnord-O-Meter</title>
+    
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+    <meta name='Abstract' contest='A tool for automated psychohistorical text analysis' />
+    <meta name='author' content='daniel' />
+    
+    <link rel='stylesheet' href='./fnord/fnords.css' />
+    
+    <script type='text/javascript' src='./common/jquery17.js'></script>
+    <script type='text/javascript' src='./common/jquery-tmpl.js'></script>
+    <script type='text/javascript' src='./common/jquery-corner.js'></script>    
+    <script type='text/javascript' src='./common/lawnchair061.js'></script>
+    <script type='text/javascript' src='./common/JTag.js'></script>
+    <script type='text/javascript' src='./fnord/sample_texts.js'></script>
+    <script type='text/javascript' src='./fnord/fnords.js'></script>
+    
+</head>
+
+
+<!--  A template that invokes all other templates and is used to paint the primary portion of <body> 
+
+      Ultimately the <body> will only hold 2 things: one invocation of this template, and informative 
+      text in DIVs which can be: 1) indexed by google 2) repainted into a modal dialog. 
+      
+      This is a bit redundant: equivalent code could just be placed in <head> and <body> without this template wrapping it.
+      But this is perfectly valid, and demonstrates JTag's stability when it comes to recursion.
+-->
+<script id='page' type='text/x-jquery-tmpl'>
+    __ready__:function(){
+        $('div.no_script').hide();   
+    }
+
+       <div class='header_box'> 
+       
+           <div class='header_title'>
+               Fnord &dash;O&dash; Meter
+           </div>
+   
+           <div id='header_subtitle'>Putting Psychohistory to the Test
+               <infobutton name='about_the_site' class='infobutton_medium' style='top:-6px;right:4px;' />
+           </div>
+           
+       </div>
+   
+
+       <input_area></input_area>
+
+       <statistics_results_ui></statistics_results_ui>       
+
+       
+       <div id='modal_document_cover' class='hidden'>
+       </div>
+       
+       <div id='modal_info_dialog' class='hidden'>
+           <div id='info_inner_scrollable'>
+           </div>
+       </div> 
+      
+
+
+</script> 
+
+
+<!--  Specific datasets calculated by and stored in the WordStatObject() will be displayed by clicking on 
+      buttons that trigger the display of a pane. 
+-->
+<script id='statistics_results_ui' type='text/x-jquery-tmpl'>
+
+   __ready__:function(){
+
+      var self = this;
+      new PaneUI( this.named('data_display_panes') ).makeTabs( this.named('data_display_buttons') , 'highlighted' , 'selected' );
+     
+      var panes = self.named("data_display_panes")[0];
+      
+      self.jtag.register( panes, 'shown', function(){ 
+         if(panes.shown.attr("name") == "one") 
+            self.named('one').jtag().reload();
+            alert('registered event'); 
+            
+      var jtarget = $('textarea.input_text');
+      function resizeAndOverlayDataDisplayPane( jtarget ){
+          alert(jtarget.attr('class'));
+          $( 'div.data_display_pane' ).offset( jtarget.offset() ).width( jtarget.width() ).height( jtarget.height() );
+      }
+      resizeAndOverlayDataDisplayPane();
+      $( 'div.data_display_pane' ).resize(function(){ resizeAndOverlayDataDisplayPane(); });
+        
+      });
+   }
+
+   <div>
+   
+      <!-- panes that show results stored in one of the attributes of the WordStatObject -->
+      <div name='data_display_panes' class='data_display_panes'>
+      
+         <data_display_pane></data_display_pane>
+         <data_display_pane></data_display_pane>
+         <data_display_pane></data_display_pane>
+         <data_display_pane></data_display_pane>
+      
+      </div>   
+      
+      <!-- buttons that toggle the panes -->
+      <div name='data_display_buttons' class='data_display_buttons'>
+      
+          <data_button>
+              label:'Next Sample',
+              func_id:'next_sample',
+              info_id:'about_the_samples'
+          </data_button>
+      
+          <data_button>
+              label:'Show Fnords',
+              func_id:'show_fnords',
+              info_id:'about_the_fnords'
+          </data_button>
+          
+          <data_button>
+              label:'Fnord Count',
+              func_id:'fnord_count',
+              info_id:'about_the_count'
+          </data_button>
+      
+          <data_button>
+              label:'Word Count',
+              func_id:'word_count',
+              info_id:'about_the_gross_count'
+          </data_button>
+      
+          <data_button>
+              label:'Fnord Curve',
+              func_id:'about_the_curve',
+              info_id:'about_the_curve'
+          </data_button>
+          
+     </div>
+
+   </div>
+
+</script>
+
+<!-- this div will start hidden but it must be painted between the text areas and the application buttons --> 
+<!-- this is the template for app panes that will be displayed when a app function button is pressed --> 
+<script id='data_display_pane' type='text/x-jquery-tmpl'>
+
+
+        __ready__:function(){
+       
+    }
+    
+    
+    <div class='infoinner'>  
+    </div>
+    
+    <closex />
+    
+</script>
+
+<!-- This template defines a button that calls application functions -->
+<!-- It is tied by the JTag PaneUI to a  -->
+<script id='data_button' type='text/x-jquery-tmpl'>
+
+    __ready__:function(){
+        $(this).addClass('data_button_wrapper button_shadow');
+        $(this).click(function(){
+                alert('function button ' + this.obj.this_function +  ' clicked');
+            }).mousedown(function(){
+                $(this).removeClass('button_shadow');
+            }).mouseup(function(){
+                $(this).addClass('button_shadow');
+            }).mouseout(function(){
+                $(this).addClass('button_shadow');
+        });
+        
+
+    },
+   
+    <div class='clickcover'></div>
+    
+    <div>
+        {{= label}}
+    </div>
+          
+    <infobutton class='infobutton_small infobutton_for_functions' />
+
+</script>
+
+<script id='input_area' type='text/x-jquery-tmpl'>
+
+    __ready__:function(){
+    
+        var jwindow  = $(window);
+        var jthis    = $(this);
+        
+        function sizePane(jwindow, jthis , height_offset_px , width_offset_decimalpercent ){
+             var jwindow         = $(window);
+             var adjusted_height = jwindow.height() - $('div.header_box').height() + height_offset_px ;
+             jthis.height( adjusted_height );
+             jthis.width( jwindow.width() * width_offset_decimalpercent );
+        }
+        
+        sizePane( jwindow , jthis , -105 , 0.8 );
+        
+        jwindow.resize( function(){
+          sizePane( jwindow , jthis , -105 , 0.8 ); 
+        });
+    }
+      
+    <div class='field_container'>
+    
+        <textarea class='input_desc'>
+        </textarea>
+        
+        <textarea class='input_text'>
+        </textarea>
+        
+        <infobutton class='infobutton_medium' style='top:-5px;left:-2px;' />
+        
+   </div>
+
+</script>
+
+
+
+<script id='infobutton' type='text/x-jquery-tmpl'>
+
+    __ready__:function(){
+        $(this).addClass('button_shadow');
+        $(this).click(function(){
+                alert($(this).attr('name'));
+            }).mousedown(function(){
+                $(this).removeClass('button_shadow');
+            }).mouseup(function(){
+                $(this).addClass('button_shadow');
+            }).mouseout(function(){
+                $(this).addClass('button_shadow');
+        });
+    }
+
+    <div class='clickcover'>
+    </div>
+    
+    <div style='centermiddle'>
+        ?
+    </div>
+
+</script>
+
+
+
+<script id='closex' type='text/x-jquery-tmpl'>
+
+    __ready__:function(){
+        var jthis = $(this);
+        jthis.html('x');
+        jthis.click(function(){
+            jthis.parent().hide();
+        });
+    }
+    
+  <div class='clickcover'>
+  </div>
+
+</script>
+
+
+
+
+<body>
+
+    <div class='jtag'>
+        template:'page'
+    </div>
+
+    <div name='text_bank' class='hidden'>
+    
+        <div name='about_the_site'> 
+        <b><big>About This Site</big></b><br /><br /> First formalized in 1974 by Lloyd DeMause, the discipline of <a href='http://en.wikipedia.org/wiki/Psychohistory'><i>psychohistory</i></a> traces its underpinnings back a century or more.<br /><br />  Combining sociology, psychology, and statistics; psychohistory attempts to reveal the unconscious motives behind political trends. Statistical analysis has traditionally been the most laborious part of the job.  The method demands painstaking reading of political speech and print journalism. The hypnotically boring passages must be stripped away, leaving only emotionally charged words and metaphors.  These are parsed into a coherent narrative of the unconscious mind. <br /><br />   The resulting passages and subsequent matrix analyses of theme repetition produce a quantifiable picture of a political atmosphere, not to mention a predictor of the nation's future. <br /><br /> At least in theory. The tenants and methodologies are extremely controversial.  Despite the success of its spin-off discipline, <i>psychobiography</i>, PH proper is usually dismissed as quackery by mainstream academics.<br /><br /> While not systematically complete, this web-based tool is designed to take some of the drudge work out of text analysis and allow both casual and serious students to test psychohistory's premise for themselves.<br /><br /> Click any of the <span id='about_the_name' class='infobutton button_shadow'>?</span> <button id='test_button' name='click me!' class='infobutton button_shadow' >HI</button>buttons to learn more about the tool.<br /><br /> 
+        </div>
+
+        <div name='about_the_name'>  
+        <b><big>About The Name</big></b><br /><br /> 
+        There is no small overlap between psychohistory and speculative fiction.<br /><br />  The name itself is often confused with the imaginary field of psychohistory invented by Issac Asimov, which he made the central premise of his <a href='http://en.wikipedia.org/wiki/The_Foundation_Series'><i>Foundation</i></a> novels.  In these books, mathematician Hari Seldon and his successors use statistical models to predict the decline of a glactic empire. With thier analytical tools they struggle to save human civilization from a new dark age. Anyone familiar with DeMausian psychohistory can draw obvious parallels with the ambitions and methodods of the discipline. <br /><br /> In his dadist trilogy, <a href='http://en.wikipedia.org/wiki/Illuminatus'><i>Illuminatus!</i></a>, Robert Anton Wilson wrote about the psychologically-charged word <i>fnord</i>.<br /><br /> In Wilson's dystopia the general public was conditioned from childhood to suppress conscious awareness of the word when they encountered it in print. Nonetheless it inspired feelings of dread and confusion in the reader.  This effect was employed by leaders to manipulate the public into irrational enmities and empty consumerism. The word, Anton wrote, is not actually 'fnord' but it is used as a stand-in for real words the readers of his novel would not be able to percieve.<br /><br /> Again, it's easy to notice the similarity between psychohistory's phrases of unconscious emotional power and Anton Wilson's invisible words. <br /><br /> There is no indication within pshychohistory that these novels have influenced it. Likewise, they make no reference to DeMause. Instead it appears the same ideas have arisen independently.  Likely they are spontaneous outgrowths of psychological observations extant in modern consciousness.
+        </div>
+
+
+        <div name='about_the_description'>
+        <b><big>Join the Effort</big></b><br /><br />  
+        The Fnord!-O-Meter is not merley a tool for personal edification. It's also crowdsourcing science!<br /><br />  Every time you process text with a description in this field the data are sent anonymously to our server.  We add this to a larger set which is used to test the theory on a wider scale.  We kindly encourage you to contribute.  Your tests can lead to a better understanding of human behavior.<br /><br />  Your participation is, of course, entirely voluntary. If you wish your experiments to remain private simply leave this description field blank.  No data will be sent to our servers.<br /><br /> If you do choose to contribute, <b>If you wish to help, please enter the publication date of the text somewhere in the description</b>.  Just about any format will do.  You may omit the day if you do not know it.<br /><br /> You will see this popup the first three times you analyze some text without entering a description.  After that we stop nagging you.
+        </div>
+
+        <div content='about_the_samples'> 
+        <b><big>Example Texts</big></b><br /><br /> 
+        These sample texts come from a database of U.S. presidential State of The Union addresses. </b><br /><br />Each time you click <b>Next Sample</b> the application will advance through the chronology. </b><br /><br /> Any analysis window you have open will update to reflect the new data.
+        </div>
+
+        <div name='about_the_fnords'> 
+        <b><big>Unconscious Meanings</big></b><br /><br /> 
+        Some text here.  Discuss the textual analysis process, use a <pre>to quote demause on his fantasy analysis</pre>  of Reagan's speech. Link to about_the_fantasy div.
+        </div>
+
+        <div name='about_the_count'> 
+        <b><big>Emotive Word Count</big></b><br /><br /> 
+        This function lets you see a quick tally of all emotive words in our dictionary that matched words in your text. </b><br /><br />It's a quick way to identify the weight that was given to specific emotional themes.
+        </div>
+
+        <div name='about_the_gross_count'> 
+        <b><big>Total Word Count</big></b><br /><br />
+        Just a tally of all words in the text, excluding articles.
+        </div>
+
+        <div name='about_the_curve'>
+        <b><big>About the Graph</big></b><br /><br /> 
+        The library of emotive words is divided into four categories, corresponding to the four stages of <i>group fantasy </i>.  <br /><br /> This graph plots the distributiuon of these words in the input speech as a percentage of words from each category. <br /><br /> The <i>x</i> axis represents the percentage. The <i>y</i> axis does not represent any data, just the order of the categories.
+        </div>
+
+    </div>
+
+   <!--
+      This div covers the screen when Javascript fails or the user has it turned off. 
+      It must be the last element in <body>
+   -->
+   <div class='no_script'><div class='clickcover'></div>&nbsp;GREETINGS, NETZIEN!<br />&nbsp;THIS WEB APPLICATION REQUIRES JAVASCRIPT.<br />&nbsp;PLEASE ENABLE IT AND RESTART.<br /><br />&nbsp;A&gt;<span style='font-size:30px;text-decoration:blink;'><blink>&#9646</blink></span></div>
+
+</body>
+
+</html>
+
+<!-- HTML of info buttons
+
+    <div id='about_the_curve' class='infobutton button_shadow infobutton_small infobutton_for_functions'>
+        <div class='clickcover'>
+        </div>
+        ?
+    </div> 
+
+-->
+
+<!-- header infobutton, goes beneath the second inside div 
+
+<div id='about_the_description' class='infobutton button_shadow infobutton_medium' style='top:-5px;left:-2px;'><div class='clickcover'></div>?</div> 
+
+-->
+
+<!-- HTML of info modal
+
+
+    <div id='modal_document_cover'>
+   </div>
+   
+   
+<div id='modal_info_dialog'>
+<div id='info_inner_scrollable'></div>
+<div class='closex button_shadow'><div class='clickcover'></div>x</div>
+</div>    
+ 
+    
+-->
+
+<!-- HTML of a Function Button
+
+    <div class='data_button_wrapper'>
+        <div id='fnord_curve' class='data_button button_shadow'><div class='clickcover'></div>Fnord Curve</div>
+        <infobutton name='about_the_curve' class='infobutton_small infobutton_for_functions' /> 
+    </div>
+    
+-->
+

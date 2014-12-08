@@ -1,0 +1,380 @@
+/***** Styling specific to the Fnord-O-Meter *****/
+
+
+
+/* Generic Button styling */
+
+.clickcover { /* a small, invisible div to surface clickable elements. */
+    position:absolute;
+    z-index:9999;
+    top:-5%;
+    right:-5%;
+    width:110%;
+    height:110%;
+    background-size:contain;
+    background-image:url('transparentdot.png');
+    background:transparent none 0% 0%;
+    border:hidden 0px;
+    border-radius:inherit; -webkit-border-radius:inherit; -moz-border-radius:inherit;
+    opacity:0;
+}
+
+.centermiddle{ /* position a block of text in the middle center of its parent */
+    display:relative;
+    top:0px;
+    left:0px;
+    width:100%
+    height:100%
+    padding:auto;
+    font-size:inherit;
+    text-align:center;
+    vertical-align:middle;
+
+}
+
+.buttonshadow {/* shadow effects for div-buttons */
+    box-shadow: 2px 2px 2px #000000; -moz-box-shadow: 2px 2px 2px #000000; -webkit-box-shadow: 2px 2px 2px #000000;
+}
+
+
+
+/* Info Button styling */
+
+div.infobutton { /* base style of the [?] button.  put an '?' inside this div. */
+    position:absolute;    
+
+    border-width:1px;
+    border-style:solid;
+    border-color:#333333;
+    border-radius:4px; -webkit-border-radius:4px; -moz-border-radius:4px;
+
+    background-color:#DAA520;
+
+    color:#333333;
+    text-align:center;
+    vertical-align:bottom; 
+    font-family:"Monospace";
+    font-size:1.2em;
+}
+
+div.infobutton_large{
+    width:30px;
+    height:30px;
+    /* font-size:1.5em; */
+}
+div.infobutton_medium{
+    width:25px;
+    height:25px;
+    /* font-size:1.2em; */
+}
+
+}
+div.infobutton_small{
+    width:17px;
+    height:17px;
+    /* font-size:0.80em; */
+}
+div.infobutton_for_functions{
+    top:-10px;
+    right:-3px;
+}
+
+
+
+span.infobutton {/* an info button that can be inserted into text. */
+    position:realative;   
+    width:20px;
+    height:15px;
+
+    border-width:1px;
+    border-style:solid;
+    border-color:#333333;
+    border-radius:2px; -webkit-border-radius:2px; -moz-border-radius:2px;
+
+    background-color:#DAA520;
+    color:#333333;
+    text-align:center;
+    padding:0px 3px 0px 3px;
+    font-family:"Monospace";
+    font-size:1em;
+}
+
+
+
+/*  Generic Close Button  */ 
+
+.closex{ /* a small circular div the user can click to dismiss the paret element. put an 'x' inside this div.      */
+    position:absolute;
+    top:-13px;
+    right:-13px;  
+    width:25px;
+    height:25px;
+ 
+    border-width:2px;
+    border-style:solid;
+    border-color:#f9f9f9;
+    border-radius:50%; -webkit-border-radius:50%; -moz-border-radius:50%;
+
+    background-color:#8B0000;
+    padding:0px;
+
+    color:#f9f9f9;
+    font-size:1.2em;
+    font-family:"Monospace";
+    text-align:top; /* center; */
+    vertical-align:middle; 
+}
+
+
+
+/* Info Modal Popup Styling */
+
+div#modal_document_cover{ /* the container div of this popup covers the screen and translucently occludes the page behind it */
+    position:fixed;
+    top:0px;
+    right:0px;
+    z-index:1000;
+    height:100%;
+    width:100%;
+   
+    background-color:#121212;
+    background-image:url('transparentdot.png');
+    background-size:contain;
+    -moz-opacity:.9;opacity:.90;filter:alpha(opacity=90);  
+   
+}
+
+div#modal_info_dialog { /* a variable-width popup dialog containing info text. */
+    
+    position:fixed;
+    top:15%;
+    left:15%;
+    z-index:1001;
+    width:70%;
+    height:70%;
+    padding:10px;
+
+    border-width:1px;
+    border-style:solid;
+    border-radius:4px; -webkit-border-radius:4px; -moz-border-radius:4px;
+    box-shadow: 4px 4px 2px #000000; -moz-box-shadow: 2px 2px 2px #000000; -webkit-box-shadow: 2px 2px 2px #000000;
+
+    background-color:#DCDCDC;
+    opacity:1;
+}
+
+div#info_inner_scrollable { /* the scrolling text window inside the info dialog */
+    position:realative;
+    z-index:1002;
+    height:auto;
+    max-height:99%;
+    font-family:"Monospace";
+    text-align:left;
+    overflow:auto;
+    opacity:1;
+}
+
+
+
+/* Obscuration of info text that gets copied into the info dialog as needed */
+div.infotext{
+    display:none;
+}
+
+
+
+/* Function results display styling */
+
+div.data_display_pane { /* */
+    position:fixed;
+    margin:0px;
+    padding:10px;
+    border-width:1px;
+    border-style:solid;
+    border-radius:4px; -webkit-border-radius:4px; -moz-border-radius:4px;
+    box-shadow: 4px 4px 2px #000000; -moz-box-shadow: 2px 2px 2px #000000; -webkit-box-shadow: 2px 2px 2px #000000;
+    background-color:#DCDCDC;
+    
+    border:1px dotted #101010; background-color:#929b91;
+}
+
+div.statistic_datum_wrapper{
+    float:left;
+    display:inline-block;
+    width:24.5%;
+    border:0px 1px 0px 0px;
+}
+
+
+
+/*  Input element styling */
+
+div.input_area {
+    position:fixed;
+    top:120px;
+    left:0.5%;
+    padding:15px;
+    text-align:center;  
+}
+div.field_container {
+    position:realative;
+    float:inherit;
+    width:100%;
+    height:100%;
+    background-color:#6c6c7a;
+    font-size:20px;
+    font-family:'Monospace';
+    text-align:left;
+}
+textarea.input_desc {
+    position:realative;
+    float:inherit;
+    width:100%;
+    height:25px;
+    vertical-align:middle;
+    text-align:inherit;
+    font-size:inherit;
+    font-family:inherit;
+}
+textarea.input_text {
+    position:realative;
+    float:inherit;
+    width:100%;
+    height:100%;
+    text-align:inherit;
+    font-size:15px;
+    font-family:inherit;
+}
+
+
+/*  Function button styling  */
+
+div.data_button_wrapper {
+    position:fixed;
+    top:0%;
+    right:0%;
+    margin-right:7px;
+
+    width:160px; 
+    height:auto;
+}
+
+
+
+div.data_button { /* a rectangular button to request stat results.  put an the name of the process inside this div. */
+    position:realative;   
+    float:left; 
+    width:150px;
+
+    border-width:1px;
+    border-style:solid;
+    border-color:#333333;
+    border-radius:8px; -webkit-border-radius:8px; -moz-border-radius:8px;
+
+    background-color:#247eaf;
+    padding: 4px 0px 4px 0px;
+    color:#333333;
+    text-align:center;
+    vertical-align:middle; 
+    font-family:"Monospace";
+    font-size:1em;
+}
+
+
+
+/*  Page layout styling   */
+
+body {
+    background-color:#708090;
+}
+div.header_box    {
+    position:fixed;
+    top:1%;
+    left:1%;
+    margin:0px;
+    width:94%;
+    padding:20px;
+    border-radius:50px; -webkit-border-radius:50px; -moz-border-radius:50px;
+    border-width:5px;
+    border-style:solid;
+    border-color:#dddddd;
+    background-color:#191970; 
+
+    font-family:"Monospace";
+}
+div.header_title    {
+    position:relative;
+    width:inherit;
+    margin:auto;
+    padding:5px 0px; 
+    border-radius:5px 5px 0px 0px / 5px 5px 0px 0px; -webkit-border-radius:5px 5px 0px 0px / 5px 5px 0px 0px; -moz-border-radius:5px 5px 0px 0px / 5px 5px 0px 0px;
+    background-color:#DCDCDC; 
+    font-family:inherit;
+    
+    color:black;
+    text-align:center;
+    font-size:25px;
+}
+div#header_subtitle {
+    font-family:inherit;
+    position:relative;
+    margin:auto;
+    width:inherit; 
+    padding:5px 0px;
+    border-radius:0px 0px 5px 5px / 0px 0px 5px 5px; -webkit-border-radius:0px 0px 5px 5px / 0px 0px 5px 5px; -moz-border-radius:0px 0px 5px 5px / 0px 0px 5px 5px;
+    background-color:white;
+
+    color:black; 
+    text-align:center;
+    font-size:18px;
+}
+
+a:link      {text-decoration:none; color:#2122cf;}
+a:visited   {text-decoration:none; color:#2122cf;}
+a:hover     {text-decoration:underline; color:#1d1eb7;}
+a:active    {text-decoration:underline; color:#1d1eb7;}
+
+div.no_script { /* dumb-terminal looking thing to tell the user to turn Javascript back on  */
+    position:fixed;
+    top:0px;
+    right:0px;
+    z-index:2000;
+    height:100%;
+    width:100%;
+    
+    
+    padding-top:20px;
+    
+    background-color:#121212;
+    background-image:url('transparentdot.png');
+    background-size:contain;
+    
+    font-family:'Monospace';
+    font-size:17px;
+    word-spacing:0.1em;
+    letter-spacing:0.05em;
+    text-align:auto;
+    vertical-align:bottom;
+    line-height:140%;
+    color:#b7b110;  
+}
+
+.hidden {
+    display:none;
+}
+
+.transparent{
+    border:hidden 0px;
+    margin:0px;
+    padding:0px;
+    background:transparent none 0% 0%;
+}
+
+/* debugging styles 
+
+border:4px dashed #ff0000; background-color:#6c3baf;
+
+border:1px dotted #101010; background-color:#929b91;
+
+
+*/   

@@ -1,0 +1,279 @@
+/***** Styling specific to the Fnord-O-Meter *****/
+
+
+
+
+/* Button item styling */
+
+.clickcover { /* a small, invisible div to surface clickable elements. */
+    z-index:9999;
+    background-image:url('transparentdot.png');
+    background-size:contain;
+    position:absolute;
+    top:-5%;
+    right:-5%;
+    width:110%;
+    height:110%;
+    background-color:#dddddd;
+    opacity:0;
+    border-radius:inherit; -webkit-border-radius:inherit; -moz-border-radius:inherit;
+}
+
+.buttonshadow {/* shadow effects for div-buttons */
+    box-shadow: 2px 2px 2px #000000; -moz-box-shadow: 2px 2px 2px #000000; -webkit-box-shadow: 2px 2px 2px #000000;
+}
+
+
+div.infobutton { /* a small square div the user can click to get an info popup.  put an '?' inside this div. */
+    position:absolute;    
+    width:30px;
+    height:30px;
+
+    border-width:1px;
+    border-style:solid;
+    border-color:#333333;
+    border-radius:4px; -webkit-border-radius:4px; -moz-border-radius:4px;
+
+    background-color:#DAA520;
+
+    color:#333333;
+    text-align:center;
+    vertical-align:bottom; 
+    font-family:"Monospace";
+    font-size:1.5em;
+}
+
+span.infobutton {/* an explanation button that can be inserted into text. */
+    position:realative;    
+    width:20px;
+    height:15px;
+
+    border-width:1px;
+    border-style:solid;
+    border-color:#333333;
+    border-radius:2px; -webkit-border-radius:2px; -moz-border-radius:2px;
+
+    background-color:#DAA520;
+
+    color:#333333;
+    text-align:center;
+    padding:0px 3px 0px 3px;
+    font-family:"Monospace";
+    font-size:1em;
+}
+
+div.processbutton { /* a rectangular button to request stat results.  put an the name of the process inside this div. */
+    position:absolute;    
+    width:150px;
+    
+
+    border-width:1px;
+    border-style:solid;
+    border-color:#333333;
+    border-radius:8px; -webkit-border-radius:8px; -moz-border-radius:8px;
+
+    background-color:#247eaf;
+    padding: 4px 0px 4px 0px;
+    color:#333333;
+    text-align:center;
+    vertical-align:middle; 
+    font-family:"Monospace";
+    font-size:1em;
+}
+
+.closex{ /* a small circular div the user can click to dismiss an element. put an 'x' inside this div.      */
+    position:absolute;
+    top:-13px;
+    right:-13px;  
+    width:25px;
+    height:25px;
+ 
+    border-width:2px;
+    border-style:solid;
+    border-color:#000000;
+    border-radius:50%; -webkit-border-radius:50%; -moz-border-radius:50%;
+
+    background-color:#8B0000;
+    padding:0px;
+
+    color:#000000;
+    font-size:1.2em;
+    font-family:"Monospace";
+    text-align:center;
+    vertical-align:middle; 
+}
+
+
+
+
+/* Popup window styling */
+
+.infoouter { /* a variable-width popup dialog containing explanation text. */
+    position:fixed;
+    width:50%;
+    height:50%;
+    top:25%;
+    left:25%;
+    padding:10px;
+
+    border-width:1px;
+    border-style:solid;
+    border-radius:4px; -webkit-border-radius:4px; -moz-border-radius:4px;
+    box-shadow: 4px 4px 2px #000000; -moz-box-shadow: 2px 2px 2px #000000; -webkit-box-shadow: 2px 2px 2px #000000;
+
+    background-color:#DCDCDC;
+}
+
+.infoinner { /* the scrolling text window inside the explanation dialog */
+    position:realative;
+    height:auto;
+    max-height:99%;
+    font-family:"Monospace";
+    text-align:left;
+    overflow:auto;
+}
+
+.resultpane {
+    /* https://developer.mozilla.org/en/CSS/column-count */
+}
+
+
+
+/*  Input element styling */
+
+div#input_area {
+    position:fixed;
+    top:120px;
+    left:0.5%;
+    /* Handled by a jQuery resize function
+    width:80%;
+    height:600px; */   
+    padding:15px;
+    text-align:center;
+    
+}
+div#field_container {
+    position:realative;
+    float:inherit;
+    width:100%;
+    height:100%;
+    background-color:#6c6c7a;
+    font-size:20px;
+    font-family:'Monospace';
+    text-align:left;
+}
+textarea#input_desc {
+    position:realative;
+    float:inherit;
+    width:100%;
+    height:25px;
+    vertical-align:middle;
+    text-align:inherit;
+    font-size:inherit;
+    font-family:inherit;
+}
+textarea#input_text {
+    position:realative;
+    float:inherit;
+    width:100%;
+    height:100%;
+    text-align:inherit;
+    font-size:15px;
+    font-family:inherit;
+}
+
+/*  Process button styling  */
+
+div#button_area {
+    position:fixed;
+    top:250px;/* 135px puts it level with the description div */
+    right:0.5%;
+    width:15%;
+    /* Handled by a jQuery resize function
+    height:100%; 
+    padding:15px; */
+   
+    font-size:20px;
+    font-family:'Monospace';
+    text-align:left;
+ /* border:4px dashed #ff0000; background-color:#6c3baf;                 debugging style                */    
+}
+
+
+
+
+/*  Page layout styling   */
+
+body {
+    background-color:#708090;
+}
+div#header_box    {
+    position:fixed;
+    top:1%;
+    left:1%;
+    margin:0px;
+    width:94%;
+    padding:20px;
+    border-radius:50px; -webkit-border-radius:50px; -moz-border-radius:50px;
+    border-width:5px;
+    border-style:solid;
+    border-color:#dddddd;
+    background-color:#191970; 
+
+    font-family:"Monospace";
+}
+div#header_title    {
+    position:relative;
+    width:inherit;
+    margin:auto;
+    padding:5px 0px; 
+    border-radius:5px 5px 0px 0px / 5px 5px 0px 0px; -webkit-border-radius:5px 5px 0px 0px / 5px 5px 0px 0px; -moz-border-radius:5px 5px 0px 0px / 5px 5px 0px 0px;
+    background-color:#DCDCDC; 
+    font-family:inherit;
+    
+    color:black;
+    text-align:center;
+    font-size:25px;
+}
+div#header_subtitle {
+    font-family:inherit;
+    position:relative;
+    margin:auto;
+    width:inherit; 
+    padding:5px 0px;
+    border-radius:0px 0px 5px 5px / 0px 0px 5px 5px; -webkit-border-radius:0px 0px 5px 5px / 0px 0px 5px 5px; -moz-border-radius:0px 0px 5px 5px / 0px 0px 5px 5px;
+    background-color:white;
+
+    color:black; 
+    text-align:center;
+    font-size:18px;
+}
+
+a:link      {text-decoration:none; color:#2122cf;}
+a:visited   {text-decoration:none; color:#2122cf;}
+a:hover     {text-decoration:underline; color:#1d1eb7;}
+a:active    {text-decoration:underline; color:#1d1eb7;}
+
+div.no_script { /* dumb-terminal looking thing to tell the user to turn Javascript back on  */
+    position:fixed;
+    top:0px;
+    right:0px;
+    height:100%;
+    width:100%;
+    
+    padding-top:20px;
+    
+    background-color:#121212;
+    background-image:url('transparentdot.png');
+    background-size:contain;
+    
+    font-family:'Monospace';
+    font-size:17px;
+    word-spacing:0.1em;
+    letter-spacing:0.05em;
+    text-align:auto;
+    vertical-align:bottom;
+    line-height:140%;
+    color:#b7b110;  
+}
+  

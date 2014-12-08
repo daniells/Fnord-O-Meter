@@ -1,0 +1,366 @@
+
+/*Securebook, author, James Robey, jrobey.services@gmail.com
+all rights reserved*/
+
+/** Bunch of misc. stuff, Curious? Search for the names across files to see uses */
+
+/** thing that shows network status in the upper right hand corer */
+
+    #_JTAGNETWORKSTATUS{
+        z-index:9999;
+    }
+
+/* rows and columns!! */
+
+    .block{display: block;}
+    .cell{display: inline-block;}
+    .cell2{display: inline-block;width:48%;}
+    .cell3{display: inline-block;width:32%;}
+    .cell4{display: inline-block;width:24%;}
+    
+/* more */
+    .nooverflow{
+       overflow:hidden;
+    }
+    
+    .shadow {
+      -moz-box-shadow: 5px 5px 5px #ccc;
+      -webkit-box-shadow: 5px 5px 5px #ccc;
+      box-shadow: 5px 5px 5px #ccc;
+    }
+
+    .overlay{
+        position: fixed;
+        top:0px;
+        left:0px;
+        width:100%;
+        height:100%;
+    }
+
+    .offscreen{left:-20000px;}
+    
+    .shadowed{
+        box-shadow: 0 0 5px #000;
+        -webkit-box-shadow: 0 0 5px #000;
+        -moz-box-shadow: 0 0 5px #000;
+    }
+
+/* dimensions */   
+    .width99{width:99%}
+    .width75{width:74%}
+    .width50{width:49%}
+    .width33{width:32%}
+    .width25{width:24%}
+    
+    .height99{height:99%}
+    
+    .margined{margin:10px;}
+    .padded{padding:10px;}
+    
+    .verticalpadded{
+        padding-top:5px;
+        padding-bottom:5px;
+    }
+    
+    .horizontalpadded{
+        padding-left:5px;
+        padding-right:5px;
+    }
+    
+    .floatright{float:right;}
+    .floatleft{float:left;}
+    
+    .transparent{opacity:0.0;}
+    .scrollable{overflow:scroll;}
+    .rounded{}
+    .margins{margin:auto;}
+    .centered{text-align: center;width:99%;}
+    .left{text-align: left;}
+    .right{text-align: right;}
+    .justify{text-align:justify;}
+    .middle{vertical-align: middle;}
+    .top{vertical-align: top;}
+    .bottom{vertical-align: bottom;}
+    .smaller{font-size:0.8em;}
+    .bigger{font-size:1.2em;}
+    .bold{font-width:bold;}
+    .padded{padding: 10px;}
+    .invisible{visibility: hidden;}
+    .hidden{display: none;}
+    .align_bottom{vertical-align: bottom;}
+    .relative{position:relative;}
+    .absolute{position:absolute;top:0px;}
+    .inherit{position:inherit;}
+    .fullsized{width:100%;height:100%;}
+    
+    .white{background-color:white;}
+    .black{background-color:black;}
+    .grey{background-color:#aaaaaa;}
+    .red{background-color:red;}
+    .green{background-color:green;}
+    .blue{background-color:blue;}
+    .yellow{background-color:yellow;}
+    .orange{background-color:orange;}
+    .purple{background-color:purple;}
+    
+    .whitecolor {color:white;}
+    .blackcolor {color:black;}
+    .greycolor  {color:#aaaaaa;}
+    .redcolor   {color:red;}
+    .greencolor {color:green;}
+    .bluecolor  {color:blue;}
+    .yellowcolor{color:yellow;}
+    .orangecolor{color:orange;}
+    .purplecolor{color:purple;}
+    
+    .leftfloat{float:left;}
+    .bordered{
+        border-width:1px;
+        border-style: solid;
+        border-color:#dddddd;
+    }
+    
+    .borderright{
+        border-right:1px;
+        border-style: solid;
+        border-color:#dddddd;
+    }
+    
+    .borderbottom{
+        border-bottom:1px;
+        border-style: solid;
+        border-color:#dddddd;
+    }
+    
+    .borderedhorizontally{
+        border-bottom:1px;
+        border-top:1px;
+        border-style: solid;
+        border-color:#dddddd;
+    }
+    
+    .borderedvertically{
+        border-left:1px;
+        border-right:1px;
+        border-style: solid;
+        border-color:#dddddd;
+    }
+
+/* JTagsFrameworkOverlay system */
+
+    .JTagsFrameworkOverlay{
+        display:none;
+        opacity:0.7;
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width:100%;
+        height:100%;
+        z-index: 9999;
+        background-image:url('transparentdot.png');
+        text-align:right;
+    }
+    
+    .JTagsFrameworkOverlay_on{
+        display: block;
+    }
+
+    .JTagsFrameworkOverlay span{
+        text-align:center;
+        top:20px;
+        margin:10px;
+        padding:10px;
+        background-color: #335533;
+        color: #ffffff;
+        font-weight:bold;
+        opacity:0.9;
+    }
+
+    .JTagsFrameworkOverlay_error{
+        visibility: hidden;
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width:100%;
+        height:100%;
+        z-index: 9999;
+        background-color: black;
+        opacity:0.5;
+        text-align:center;
+    }
+
+    .JTagsFrameworkOverlay_error span{
+        position: relative;
+        top: 200px; 
+        background-color: #aa0000;
+        color: #ffffff;
+        width:390px;
+        font-size: 2.5em;
+        padding: 50px;
+        margin: auto;
+        display:inline-block;
+        font-weight: bold;
+    }
+    
+    .ListActions{
+        text-align: center;
+        padding: 10px;
+        margin: auto;
+    }
+
+    .ListActions input{
+        width:80px;
+        font-size:0.9em;
+    }
+    
+/* Header for the top of each section in a pane. Pretty generic.*/
+
+    .SectionHeader{
+        text-align:center;
+        font-size:1.4em;
+        border-bottom:1px;
+        border-style:solid;
+        border-color:#999999;
+        margin:0px 0px 10px 0px;
+    }
+    
+/*  Instructions for a pane  */
+    
+    .PaneHeader{
+        background-color:white;
+        border-top:1px;
+        border-style:solid;
+        border-color:#c2c2c2;
+        text-align: center;
+        font-size: 1em;
+        padding: 10px;
+    }
+    
+/* headers and items of lists */
+    
+    .ListHeaderHighliter{
+        vertical-align:middle;
+        text-align: center;
+    }
+    
+    .ListHeaderHighliter span{
+        display: inline-block;
+        font-size: 0.9em;
+        background-color:transparent;
+        padding:10px 0px;
+        margin: 5px 0px;
+    }
+    
+    .ListHeaderHighliter span:hover{
+        color:red;
+    }
+
+    .ListItemSelected{
+        background-color: #DFD
+    }
+    
+    .ListItemHighlite{
+        background-color: #EBF0B0
+    }
+
+/* horizontal tabs widget */
+
+    .HorizontalPanes{
+        text-align: center;
+        height:610px;
+    }
+
+    .HorizontalPanes > *{
+        width:100%;
+    }
+
+    .HorizontalTabs{        
+    }
+
+    .HorizontalTabs > span > i {
+        font-size:1.3em;
+    }
+
+    .HorizontalTabs > span{
+        z-index:-10;
+        text-align: center;
+        padding: 7px 3px 7px 3px;
+        display: inline-block;
+        width: 183px;
+
+        border-top:0px;
+        border-right:1px;
+        border-left:1px;
+        border-style:solid;
+        border-color:#E8ECFF;
+    }
+
+    .HorizontalTabs > span:hover{
+        border-color:#999999;
+    }
+
+    .HorizontalTabsSelected{
+        background-color: #EAFFE6;
+        border-top:1px;
+        border-right:1px;
+        border-left:1px;
+        border-style:solid;
+        border-color:#999999;
+    }
+
+/* vertical tabs widget */
+    .VerticalPanes{
+       width:60%;
+    }
+
+    .VerticalTabs{        
+        text-align: center;
+        margin: 10px;
+        color:black;
+
+        border-left:1px;
+        border-right:1px;
+        border-style:solid;
+        border-color:#333333;
+        
+        width:20%;
+        height:300px;
+    }
+
+    .VerticalTabs > div{
+        height:50px;
+        
+        text-align: center;
+        padding: 7px 0px 7px 0px;
+        border-top:1px;
+        border-bottom:1px;
+        border-style:solid;
+        border-color:#dddddd;
+        margin:7px 0px 7px 0px;
+    }
+
+    .VerticalTabs > div > span{
+        text-align: center;
+        vertical-align:middle;
+        padding: 7px 0px 7px 0px;
+        display: inline-block;
+        height:1px;
+    }
+
+    .VerticalTabs > div:hover{
+        border-color:#333333;
+    }
+
+    .VerticalTabsSelected{
+        background-color: #dddddd;
+        border-top:1px;
+        border-bottom:1px;
+        border-style:solid;
+        border-color:#dddddd;
+    }
+
+    .VerticalTabs > div > span > i {
+        font-size:1.3em;
+    }
+
+
