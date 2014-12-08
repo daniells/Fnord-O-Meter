@@ -2,22 +2,7 @@
 
 
 
-/* Generic Button styling */
-
-.clickcover { /* a small, invisible div to surface clickable elements. */
-    position:absolute;
-    z-index:9999;
-    top:-5%;
-    right:-5%;
-    width:110%;
-    height:110%;
-    background-size:contain;
-    background-image:url('transparentdot.png');
-    background:transparent none 0% 0%;
-    border:hidden 0px;
-    border-radius:inherit; -webkit-border-radius:inherit; -moz-border-radius:inherit;
-    opacity:0;
-}
+/* Gneric Button styling */
 
 .centermiddle{ /* position a block of text in the middle center of its parent */
     display:relative;
@@ -55,6 +40,9 @@ div.infobutton { /* base style of the [?] button.  put an '?' inside this div. *
     vertical-align:bottom; 
     font-family:"Monospace";
     font-size:1.2em;
+    
+    width:25px;
+    height:25px;
 }
 
 div.infobutton_large{
@@ -81,7 +69,7 @@ div.infobutton_for_functions{
 
 
 
-span.infobutton {/* an info button that can be inserted into text. */
+.infobutton {/* an info button that can be inserted into text. */
     position:realative;   
     width:20px;
     height:15px;
@@ -98,33 +86,6 @@ span.infobutton {/* an info button that can be inserted into text. */
     font-family:"Monospace";
     font-size:1em;
 }
-
-
-
-/*  Generic Close Button  */ 
-
-.closex{ /* a small circular div the user can click to dismiss the paret element. put an 'x' inside this div.      */
-    position:absolute;
-    top:-13px;
-    right:-13px;  
-    width:25px;
-    height:25px;
- 
-    border-width:2px;
-    border-style:solid;
-    border-color:#f9f9f9;
-    border-radius:50%; -webkit-border-radius:50%; -moz-border-radius:50%;
-
-    background-color:#8B0000;
-    padding:0px;
-
-    color:#f9f9f9;
-    font-size:1.2em;
-    font-family:"Monospace";
-    text-align:top; /* center; */
-    vertical-align:middle; 
-}
-
 
 
 /* Info Modal Popup Styling */
@@ -144,14 +105,25 @@ div#modal_document_cover{ /* the container div of this popup covers the screen a
    
 }
 
-div#modal_info_dialog { /* a variable-width popup dialog containing info text. */
+div#modal_document_cover{ /* the container div of this popup covers the screen and translucently occludes the page behind it */
+    position:fixed;
+    top:0px;
+    right:0px;
+    z-index:1000;
+    height:100%;
+    width:100%;
+   
+    background-color:#121212;
+    background-image:url('transparentdot.png');
+    background-size:contain;
+    -moz-opacity:.9;opacity:.90;filter:alpha(opacity=90);  
+   
+}
+
+.infomodal { /* a variable-width popup dialog containing info text. */
     
     position:fixed;
-    top:15%;
-    left:15%;
     z-index:1001;
-    width:70%;
-    height:70%;
     padding:10px;
 
     border-width:1px;
@@ -177,8 +149,11 @@ div#info_inner_scrollable { /* the scrolling text window inside the info dialog 
 
 
 /* Obscuration of info text that gets copied into the info dialog as needed */
-div.infotext{
-    display:none;
+.infomodalcontent{
+    position:absolute;
+    top:99999px;
+    right:99999px;
+    font-size:50px;
 }
 
 
@@ -287,6 +262,7 @@ div.data_button { /* a rectangular button to request stat results.  put an the n
 body {
     background-color:#708090;
 }
+
 div.header_box    {
     position:fixed;
     top:1%;

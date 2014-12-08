@@ -1,1 +1,0 @@
-note that these files are constant for all jtag applications, so they can be accessed from the /base url on the JTagServer, available for all instances to use. Builtin widgets are still included per-instance, however

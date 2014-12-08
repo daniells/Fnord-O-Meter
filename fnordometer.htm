@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN'
+'http://www.w3.org/TR/xhtmll/DTD/xhtmll-transitional.dtd'>
+
+<html xmlns='http://www.w3.org/1999/xhtml'>
+
+<head>
+    <title>fnordometer</title>
+    
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+    <meta name='Abstract' contest='A tool for automated psychohistorical text analysis' />
+    <meta name='author' content='daniel' />
+
+    <!-- Fnordometer Code -->
+    <link rel='stylesheet' href='fnord/fnordometer.css'></link>
+    <script src='fnord/fnordometer.js' type='text/javascript'></script>
+    <script src="fnord/fnordometerspeeches.js" type="text/javascript"></script>
+
+	<!-- Nametag Tempates runtime -->
+    <link href="common/verbs.css" media="all" rel="stylesheet" type="text/css"></link>
+    <!-- link href="http://cdn.tagos.io/verbs.css" media="all" rel="stylesheet" type="text/css"></link -->
+    <script src="common/NametagTemplates.min.js" type="text/javascript"></script>
+    <!-- script src="http://cdn.tagos.io/NametagTemplates.min.js" type="text/javascript"></script -->
+</head>
+<body>
+    <!--
+        To make a fnordometer we're going to need a Nametag Templates inspector pattern.
+        The fnordometer must have these features
+        * List
+            > speeches in the form {title,description,text}
+            > items delete when alt+delete is pressed
+            > single selection populates inspector pane
+            > multiselection clears inspector pane, allows user to delete multiple items
+            > list populates from localStorage + builtins
+        * Inspector
+            > Allows user to paste in new text, or edit current text, title, desc
+            > If title changes, new list item
+    -->
+    
+<script id="SizedToWindow" type="text/nametag">
+    __init__:function(){
+        var resize = function(){
+            self.set('width', window.innerWidth);
+            self.set('height', window.innerHeight);
+        };
+
+        $(window).bind("resize", resize);
+
+        Nametag.GUI.focus.setLayer(self);
+        Nametag.GUI.focus.setWindow(self);
+
+        resize();
+    }
+</script>
+<script id="wat" type="text/nametag">
+    
+    root:true,
+    
+    __ready__:function(){
+        $('div.no_script').remove();
+    }
+
+
+</script>
+<script id="fnordometer" type="text/nametag">
+    <!-- markup shml -->
+
+    <view name="speechlist" class="scrollable abs" 
+          left="%%{self.parent.width;;value*0.75}"
+          width="%%{self.parent.width;;value*0.25}"
+          height="%%{self.parent.height}">
+
+        list:fnordometer.speeches,
+        selectable:"paleyellow, vertLightBlueGradient",
+        keyselectable:true,
+        autoscrollable:true,
+        selectfirst:true,
+
+        __selection__:function(elem){
+            self.sibling('inspector').list = [elem.data];
+            self.sibling('inspector').reload();
+        },
+
+        __unselection__:function(elem){
+            self.sibling('inspector').reset();
+        }
+        
+        <div>[=title=]
+
+    <view name="inspector" class="abs" 
+          width="%%{self.parent.width;;value*0.75}"
+          height="%%{self.parent.height}"
+          autoload="%{false}">
+          
+          
+          __loaded__:function(){
+              console.log($(self).text());
+          },
+          list:true
+          
+        <div class="paded">
+            [=title=]
+        <div class="padded">
+            [=description=]
+        <div class="padded">
+            [=text=]
+
+
+</script> 
+    
+    
+<div class="nametag" template="fnordometer" traits="SizedToWindow" />
+
+
+
+
+
+
+</body>
+</html>

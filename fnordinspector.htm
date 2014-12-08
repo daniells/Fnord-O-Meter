@@ -1,0 +1,40 @@
+<script id="Inspector" type="text/nametag">
+    <!-- markup shml -->
+
+    <view name="inspector" class="abs" 
+          width="%%{self.parent.width;;value*0.9}"
+          height="%%{self.parent.height}"
+          autoload="%{false}">
+          
+          __loaded__:function(){
+              console.log($(self).text());
+          },
+          list:true
+
+        <div class="padded evenbigger">
+            [=item=]
+
+    <view class="scrollable abs" 
+          left="%%{self.parent.width;;value*0.75}"
+          width="%%{self.parent.width;;value*0.25}"
+          height="%%{self.parent.height}">
+
+        list:[{title:"one",description:"desc one",text:"text one"},{title:"two",description:"desc two",text:"text two"}],
+        selectable:"paleyellow, vertLightBlueGradient",
+        keyselectable:true,
+        autoscrollable:true,
+        selectfirst:true,
+
+        __selection__:function(elem){
+            self.sibling('inspector').list = [elem.data.text];
+            self.sibling('inspector').reload();
+        },
+
+        __unselection__:function(elem){
+            self.sibling('inspector').reset();
+        }
+
+        <div>[=title=]
+
+
+</script>
