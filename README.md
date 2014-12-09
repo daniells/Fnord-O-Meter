@@ -1,6 +1,5 @@
 # Fnord-O-Meter 
-###### A meme-splice of Wilson, DeMausse, and Asimov
-
+###### A meme-splice of Robert Anton Wilson, Lloyd DeMausse, and Issac Asimov
 
 ##### What
 
@@ -9,33 +8,40 @@ This project will create a Nametag app to find [group fantasy words](http://book
 
 ##### Why
 
-* an example of group fantasy analysis that makes it easy to grasp
-* A demonstration of how to write a parsed-text display in Nametag 
+* An example of group fantasy analysis that makes it easy to grasp
+* A demonstration of how to write a useful application in Nametag Templates
+* A tool for empirically testing GF theory
+* Predicting the political future
+* Seeing the fnords!
 
+##### When
 
+The #memes channel on DALnet was once a hotbed of bizzare ideas.  One we actually followed through was the Fnord-O-Meter, specced by channel users and written by yegs.  The date on 5th-gen copy of the original html app is dated 1/5/07. 
 
-##### History
+A second version of the Fnord-O-Meter was under development in 2012.  This was a Jtag-based web app; Jatag being the precursor of Nametag Templates.  This code has been found and placed in the git history. There was no version control so incremental progress is saved as numberd files.
 
-The #memes channel on DALnet was once a hotbed of bizzare ideas.  One we actually followed through was the Fnord-O-Meter, specced by channel users and written by yegs.  
-
-The date on 5th-gen copy of the original html file is 1/5/07.  Miraculously, that sounds right. 
-
-There was an early version of a jQuery-based Fnord-O-Meter in 2011 or so, but that code was lost.  This is a do-over-do-better of the AJAXish upgrade.
+In 2014 the project was ressurected and is currently being refactored into a Nametag Templates web application.
 
 ##### Planned Features
-
-Who knows how much of this I'll ever have time to do
-
 * Simple sequential display
 * Sequential display with proximal nouns 
 * Frequency ordered display
+* Scratchpad persistence using localStorage
+* Expand fnord word library, and categorize based on fetal drama phases [strong,constrictive,cracking,upheaval]
+* D3 Trend graphing from results files
+
+##### Big Dream Features
 * Results files using TrustFS
 * Categories and other metadata on results files
 * AJAXy url-based page parsing
 * Pages fetched and parsed automatically, periodically, based on a pref file
-* D3 Trend graphing from results files
+* Multi-language support
 
-
-##### Path
-
+##### Development Path
+* Update engine
 * Refactor old code into cell-based list output
+* Inspector pattern with tabbed inspector panes
+* pane 1 = {title, description, text} populaing fields and textarea
+* pane 2 = fnord word list with feq count
+* pane 3 = proximal noun/adj display
+* pane 4 = d3 histogram
