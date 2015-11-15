@@ -1,6 +1,6 @@
 
 /* 
-    css for nametag runtime offering standard verbs to cut down on prototyping effort, 
+    css for hypertag runtime offering standard verbs to cut down on prototyping effort, 
     c. 2012-2014 JAMES ROBEY, jrobey.services@gmail.com. Its free for any use. 
     Look for the package runtime release to distribute your own open-source appications.
 */
@@ -264,7 +264,10 @@
     .faded{opacity: 0.2;}
     .transparent{opacity:0.0;}
     
-    .scrollable{overflow:auto !important;}
+    .scrollable{
+        overflow:auto;
+    }
+    
     .scrollabley{overflow-y:auto !important; overflow-x:hidden !important;}
     .scrollablex{overflow-x:auto !important; overflow-y:hidden !important;}
     
@@ -528,17 +531,18 @@
     .notbordered{
         border-width:0px;
     }
-    
-    .bigmargined{margin:30px;}
-    .margined{margin:10px;}
+
     .padded{padding:10px;}
-    
-    .bigmargined{margin:30px;}
-    .smallmargined{margin:5px;}
-    
-    .smallpadded{padding:5px;}
     .bigpadded{padding:30px;}
-    
+    .smallpadded{padding:5px;}
+    .verybigpadded{padding:50px;}
+    .verysmallpadded{padding:3px;}
+
+    .leftpadded{padding-left:10px;}
+    .rightpadded{padding-right:10px;}
+    .bottompadded{padding-bottom:10px;}
+    .toppadded{padding-top:10px;}
+
     .bigleftpadded{padding-left:30px;}
     .bigrightpadded{padding-right:30px;}
     .bigbottompadded{padding-bottom:30px;}
@@ -548,30 +552,48 @@
     .smallrightpadded{padding-right:5px;}
     .smallbottompadded{padding-bottom:5px;}
     .smalltoppadded{padding-top:5px;}
-    
-    .leftpadded{padding-left:10px;}
-    .rightpadded{padding-right:10px;}
-    .bottompadded{padding-bottom:10px;}
-    .toppadded{padding-top:10px;}
-    
-    
-    .smallrightspacer{margin-right:5px;}
-    .smallleftspacer{margin-left:5px;}
-    
+
+    .verybigleftpadded{padding-left:50px;}
+    .verybigrightpadded{padding-right:50px;}
+    .verybigbottompadded{padding-bottom:50px;}
+    .verybigtoppadded{padding-top:50px;}
+
+    .verysmallleftpadded{padding-left:3px;}
+    .verysmallrightpadded{padding-right:3px;}
+    .verysmallbottompadded{padding-bottom:3px;}
+    .verysmalltoppadded{padding-top:3px;}
+
+    .spacer{margin:10px;}
+    .bigspacer{margin:30px;}
+    .smallspacer{margin:5px;}
+    .verybigspacer{margin:50px;}
+    .verysmallspacer{margin:3px;}
+
+    .topspacer{margin-top:10px;}
+    .bottomspacer{margin-bottom:10px;}
     .rightspacer{margin-right:10px;}
     .leftspacer{margin-left:10px;}
+
+    .bigtopspacer{margin-top:30px;}
+    .bigbottomspacer{margin-bottom:30px;}
     .bigrightspacer{margin-right:30px;}
     .bigleftspacer{margin-left:30px;}
     
     .smallrightspacer{margin-right:5px;}
     .smallleftspacer{margin-left:5px;}
-    
-    .topspacer{margin-top:5px;}
-    .bottomspacer{margin-bottom:5px;}
-    
-    .bigtopspacer{margin-top:20px;}
-    .bigbottomspacer{margin-bottom:20px;}
-    
+    .smalltopspacer{margin-top:5px;}
+    .smallbottomspacer{margin-bottom:5px;}
+
+    .verybigrightspacer{margin-right:50px;}
+    .verybigleftspacer{margin-left:50px;}
+    .verybigtopspacer{margin-top:50px;}
+    .verybigbottomspacer{margin-bottom:50px;}
+
+    .verysmallrightspacer{margin-right:3px;}
+    .verysmallleftspacer{margin-left:3px;}
+    .verysmalltopspacer{margin-top:3px;}
+    .verysmallbottomspacer{margin-bottom:3px;}
+
     .textselectable{
         -webkit-touch-callout: text !important;
         -webkit-user-select: text !important;
@@ -861,7 +883,7 @@
 .width75    {width:74%;}
 .width70    {width:69%;}
 .width65    {width:65%;}
-.width60    {width:60%;}
+.width60    {width:59%;}
 .width55    {width:55%;}
 .width50    {width:49%;}
 .width49    {width:49%;}
@@ -1148,37 +1170,39 @@
 
 /* css for trustos widgetry */
 
-.button{
-    background: #3498db;
-    background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
-    background-image: -moz-linear-gradient(top, #3498db, #2980b9);
-    background-image: -ms-linear-gradient(top, #3498db, #2980b9);
-    background-image: -o-linear-gradient(top, #3498db, #2980b9);
-    background-image: linear-gradient(to bottom, #3498db, #2980b9);
-    -webkit-border-radius: 16;
-    -moz-border-radius: 16;
-    border-radius: 16px;
-    font-family: Arial;
-    color: #ffffff;
-    font-size: 1em;
-    padding: 4px 8px 4px 8px;
-    border: solid #ffffff 1px;
-    text-decoration: none;
+.button {
+  background: #7acaff;
+  background-image: -webkit-linear-gradient(top, #7acaff, #2275bd);
+  background-image: -moz-linear-gradient(top, #7acaff, #2275bd);
+  background-image: -ms-linear-gradient(top, #7acaff, #2275bd);
+  background-image: -o-linear-gradient(top, #7acaff, #2275bd);
+  background-image: linear-gradient(to bottom, #7acaff, #2275bd);
+  -webkit-border-radius: 7;
+  -moz-border-radius: 7;
+  border-radius: 7px;
+  -webkit-box-shadow: 0px 0px 3px #d1d1d1;
+  -moz-box-shadow: 0px 0px 3px #d1d1d1;
+  box-shadow: 0px 0px 3px #d1d1d1;
+  color: #ffffff;
+  padding: 4px 10px 4px 10px;
+  border: solid #d6d6d6 1px;
+  outline:none;
 }
 
 .button:hover {
-  background: #3cb0fd;
-  background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
-  background-image: -moz-linear-gradient(top, #3cb0fd, #3498db);
-  background-image: -ms-linear-gradient(top, #3cb0fd, #3498db);
-  background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
-  background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
-  text-decoration: none;
+  background: #add3f0;
+  background-image: -webkit-linear-gradient(top, #add3f0, #3498db);
+  background-image: -moz-linear-gradient(top, #add3f0, #3498db);
+  background-image: -ms-linear-gradient(top, #add3f0, #3498db);
+  background-image: -o-linear-gradient(top, #add3f0, #3498db);
+  background-image: linear-gradient(to bottom, #add3f0, #3498db);
+  outline:none;
 }
 
 .button:disabled {
     background:#99A4C1;
     color: #777;
+    outline:none;
 }
 
 /* Handy System Gradients */
@@ -1508,7 +1532,6 @@
     background: -ms-linear-gradient(left,  #8c8c8c 0%,#828c95 64%,#b5bdc8 100%); /* IE10+ */
     background: linear-gradient(to right,  #8c8c8c 0%,#828c95 64%,#b5bdc8 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8c8c8c', endColorstr='#b5bdc8',GradientType=1 ); /* IE6-9 */
-    
 }
 
 .horizBlackGradient{
@@ -1583,14 +1606,23 @@
 }
 
 .buttonGradient{
-    background: #d6eefe; /* Old browsers */
-    background: -moz-linear-gradient(top,  #d6eefe 0%, #cce6fc 10%, #b9d8f7 25%, #bbd9f9 37%, #bddbfb 50%, #a5cef7 51%, #c8ebfc 83%, #daf9fe 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#d6eefe), color-stop(10%,#cce6fc), color-stop(25%,#b9d8f7), color-stop(37%,#bbd9f9), color-stop(50%,#bddbfb), color-stop(51%,#a5cef7), color-stop(83%,#c8ebfc), color-stop(100%,#daf9fe)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(top,  #d6eefe 0%,#cce6fc 10%,#b9d8f7 25%,#bbd9f9 37%,#bddbfb 50%,#a5cef7 51%,#c8ebfc 83%,#daf9fe 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(top,  #d6eefe 0%,#cce6fc 10%,#b9d8f7 25%,#bbd9f9 37%,#bddbfb 50%,#a5cef7 51%,#c8ebfc 83%,#daf9fe 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(top,  #d6eefe 0%,#cce6fc 10%,#b9d8f7 25%,#bbd9f9 37%,#bddbfb 50%,#a5cef7 51%,#c8ebfc 83%,#daf9fe 100%); /* IE10+ */
-    background: linear-gradient(to bottom,  #d6eefe 0%,#cce6fc 10%,#b9d8f7 25%,#bbd9f9 37%,#bddbfb 50%,#a5cef7 51%,#c8ebfc 83%,#daf9fe 100%); /* W3C */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d6eefe', endColorstr='#daf9fe',GradientType=0 ); /* IE6-9 */
+    background-image: -webkit-linear-gradient(top, #7acaff, #2275bd);
+    background-image: -moz-linear-gradient(top, #7acaff, #2275bd);
+    background-image: -ms-linear-gradient(top, #7acaff, #2275bd);
+    background-image: -o-linear-gradient(top, #7acaff, #2275bd);
+    background-image: linear-gradient(to bottom, #7acaff, #2275bd);
+}
+
+.vertRedGradient{
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#f3c5bd+0,e86c57+50,ea2803+51,ff6600+75,c72200+100;Red+Gloss */
+    background: #f3c5bd; /* Old browsers */
+    background: -moz-linear-gradient(top,  #f3c5bd 0%, #e86c57 50%, #ea2803 51%, #ff6600 75%, #c72200 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f3c5bd), color-stop(50%,#e86c57), color-stop(51%,#ea2803), color-stop(75%,#ff6600), color-stop(100%,#c72200)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #f3c5bd 0%,#e86c57 50%,#ea2803 51%,#ff6600 75%,#c72200 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #f3c5bd 0%,#e86c57 50%,#ea2803 51%,#ff6600 75%,#c72200 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #f3c5bd 0%,#e86c57 50%,#ea2803 51%,#ff6600 75%,#c72200 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #f3c5bd 0%,#e86c57 50%,#ea2803 51%,#ff6600 75%,#c72200 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3c5bd', endColorstr='#c72200',GradientType=0 ); /* IE6-9 */
 }
 
 .vertBlueGradientInverted{

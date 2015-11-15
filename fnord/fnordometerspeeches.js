@@ -3,14 +3,7 @@
   //           Sample Speeches         //
  //                                   //
 ///////////////////////////////////////
-
-
-if(!fnordometer){
-    var fnordometer = {};
-}
-
-
-fnordometer.speeches = [
+var fnordometerspeeches = [
 
     {   title          : "State of the Union 2005",
         description    : "George W Bush, State of the Union, Feb 3 2005 ",

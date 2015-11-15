@@ -1,0 +1,792 @@
+
+<!-- these styles present a good single page application layout -->
+<style>
+    html{
+        padding:0px;
+        margin:0px;
+        overflow:hidden;
+    }
+
+    body{
+        padding:0px;
+        margin:0px;
+        overflow:hidden;
+    }
+</style>
+    
+<script id="root" type="text/hypertag"></script>
+    
+<script id="text" type="text/hypertag" tagtype="span"></script>
+    
+<script id="dropdown" type="text/hypertag" tagtype="select"></script>
+    
+<script id="remainingview" type="text/hypertag" classes="rel">
+    width:"%%{self.parent.width}",
+    height:"%%{self.parent.height;;value-self.offsetTop}"
+</script>
+
+<!-- text?? Shorthand for a span-based hypertag. -->
+<script id="text" type="text/hypertag" tagtype="span"></script>
+
+<!-- image?? shorthand for a img-based hypertag. -->
+<script id="image" type="text/hypertag" tagtype="img">
+    __init__:function(){
+        $(self).load(function(){
+            self.parent.send('width');
+            self.parent.send('height');
+        });
+    }
+</script>
+    
+<!-- fullview?? A simple mechanism to take the dimensions of the hypertag parent. -->
+<script id="fullview" type="text/hypertag">
+    width:"%%{self.parent.width}",
+    height:"%%{self.parent.height}"
+</script>
+  
+<!-- SizedToWindow?? Cause a hypertag to take the dimensions of the window, usually to create cascading hitches. -->  
+<script id="SizedToWindow" type="text/hypertag">
+    /* on init, set it up so this view will change size when the
+       window does. also evaluate it for the first time */
+
+    __init__:function(){
+        window.addEventListener("resize", self.resizeFunction, true);
+        window.addEventListener("orientationchange", self.resizeFunction, true);
+        Hypertag.GUI.focus.setLayer(self);
+        Hypertag.GUI.focus.setWindow(self);
+        self.resizeFunction();
+    },
+    
+    /* an unfortunate and dirty hackorola, seems like the browser doesn't
+       stablize it's offsetTops and innerWidth/Height until 25-50 msecs into
+       the load. While discovering the true nature of the delay is vital
+       this timeout is efficient enough (occuring just once on page load)
+       that i can leave it in just to get things working. */
+    __load__:function(){
+        setTimeout(function(){
+            self.send("width");
+            self.send("height");
+        }, 100);
+    },
+    
+    /* I will set myself to the size of the window when called*/
+    resizeFunction:function(){
+        self.set('width', window.innerWidth);
+        self.set('height', window.innerHeight);      
+    }
+</script>
+    
+<!-- DroppableShadow?? A trait to make an listitem shadowed when its being hovered over by a compatible droptype. -->
+<script id="DroppableShadow" type="text/hypertag">
+    __dragover__:function(item){
+        $(item).addClass("bigshadowed");
+    },
+    
+    __dragout__:function(item){
+        $(item).removeClass("bigshadowed");
+    }
+</script>
+    
+<!-- DroppableOutline?? A trait to make an listitem outlined when its being hovered over by a compatible droptype. -->
+<script id="DroppableOutline" type="text/hypertag">
+    __dragover__:function(item){
+        $(item).css("outline-style", "solid").css("outline-width", "2px").css("outline-color", self.DroppableOutline$ || "white");
+    },
+
+    __dragout__:function(item){
+        $(item).css("outline-style", "none");
+    }
+</script>
+    
+<!-- DroppableShadow?? A trait to make an listitem bordered when its being hovered over by a compatible droptype. -->
+<script id="DroppableBorder" type="text/hypertag">
+    __dragover__:function(item){
+        $(item).css("border-style", "solid").css("border-width", "2px").css("border-color", self.DroppableBlueBorder$ || "Blue");
+    },
+
+    __dragout__:function(item){
+        $(item).css("border-style", "none");
+    }
+</script>
+    
+<!-- ReorderableChildren?? A trait to apply logic that makes a draggable list rearrageable by creating new items, and removing the originals. -->
+<script id="ReorderableChildren" type="text/hypertag">
+    droponself:true,
+    droponothers:false,
+    droponchild:true,
+
+    __drop__:function(items, child, droptype){
+        console.log("items", items[0].data);
+        if(child)
+            for(var i = 0; i != items.length ; i ++)
+                self.insertItems(items[i].data, child);
+        else
+            for(var i = 0; i != items.length ; i ++)
+                this.appendItems(items[i].data);
+                
+        for(var i = 0; i != items.length ; i ++)
+            items[i].remove(true);
+    }
+</script>
+    
+<!-- MoveableChildren?? A trait to apply logic that makes a drag list rearrageable by moving items to the drop target. -->
+<script id="MoveableChildren" type="text/hypertag">
+    droponself:true,
+    droponcontainer:true,
+    droponchild:true,
+    
+    /* this differs from reorderable children by moving the instance
+       itself via insertBefore as opposed to insertItems, which removes
+       and readds by data alone.  */
+    __drop__:function(items, child, droptype){
+        /* easy! integrated it into hypertag. */
+        console.log("droptype, self.drag", droptype, self.drag, droptype.intersect(self.drag));
+        if(droptype.intersect(self.drag))
+            self.moveItems(items, child);  
+    }
+</script>
+
+<!-- DroppableMove?? A trait to apply the logic of removing an item from a drag source to a drop target. -->
+<script id="DroppableMove" type="text/hypertag">
+    __dropping__:function(items, target, droptype){
+        for(var i = 0; i != items.length ; i ++)
+            items[i].remove(true);
+    },
+
+    __drop__:function(items, droptype){
+        for(var i = 0; i != items.length ; i ++)
+            this.appendItems(items[i].data);
+    }
+</script>
+    
+<script id="DroppableAdd" type="text/hypertag">
+    __dropping__:function(items, target, droptype){
+        for(var i = 0; i != items.length ; i ++)
+            items[i].remove(true);
+    },
+
+    __drop__:function(items, droptype){
+        for(var i = 0; i != items.length ; i ++)
+            this.appendItems(items[i].data);
+    }
+</script>
+    
+<!-- BrowserFileDroppable?? A trait that will pass along the data from a single file dropped from an operating system browser onto a hypertag (no drag behavior needed). The trait-property should be a function that receives the data. -->
+<script id="BrowserFileDroppable" type="text/hypertag">
+    <!-- markup shml -->
+
+    __loaded__:function(){
+        var cancel = function(e){
+            if (e.preventDefault) { e.preventDefault(); }
+            return false;
+        };
+
+        addEventHandler(self, 'dragover', cancel);
+        addEventHandler(self, 'dragenter', cancel);
+       
+        addEventHandler(self, 'drop', function (e){
+            console.log("FOO");
+            //get window.event if e argument missing (in IE) 
+            e = e || window.event; 
+           
+            //stops the browser from redirecting off to the image.
+            if (e.preventDefault)
+                e.preventDefault(); 
+
+            var dt = e.dataTransfer;
+            var files = dt.files;
+           
+            for(var i = 0; i != files.length; i ++){
+                var file = files[i];
+                var reader = new FileReader();
+
+                addEventHandler(reader, 'loadend', function(e, file){
+                   
+                    //UNTESTED FEATURE
+                    if(self.ResizeImageFlag){
+                        var image = new Image();
+                       
+                        image.src = this.result;
+
+                        image.onload = function() {
+                            var maxWidth = 220,
+                                maxHeight = 220,
+                                imageWidth = image.width,
+                                imageHeight = image.height;
+                           
+                            if(imageWidth > imageHeight){
+                                if(imageWidth > maxWidth){
+                                    imageHeight *= maxWidth / imageWidth;
+                                    imageWidth = maxWidth;
+                                }
+                            }
+                           
+                            else{
+                                if (imageHeight > maxHeight) {
+                                    imageWidth *= maxHeight / imageHeight;
+                                    imageHeight = maxHeight;
+                                }
+                            }
+                           
+                            var canvas = document.createElement('canvas');
+                            canvas.width = imageWidth;
+                            canvas.height = imageHeight;
+                           
+                            var ctx = canvas.getContext("2d");
+                            ctx.drawImage(this, 0, 0, imageWidth, imageHeight);
+                           
+                            // The resized file ready for upload
+                            var finalFile = canvas.toDataURL(fileType);
+                           
+                            self.BrowserFileDroppable$(finalFile);
+                        };
+                    }
+                   
+                    //NORMAL PATH; 
+                    else
+                        self.BrowserFileDroppable$(this.result);
+                });
+
+                //attach event handlers here...
+                reader.readAsDataURL(file);
+            }
+
+            return false;
+        });
+    }
+</script>
+    
+<!-- Hoverselectable?? A trait to make anything do something when hovered over during a drag and drop operation. -->
+<script id="Hoverselectable" type="text/hypertag">
+    __loaded__:function(){
+        /* note onhoverselected is here only so we can put the trait on tags that dont allow
+           inner text, such as fileimg (or img tags in general) */
+        makeHoverSelectable(self, self.Hoverselectable$ || self.onhoverselected);
+    }
+</script>      
+         
+<!-- slidetemplates?? Implmented as a hypertag list of templates to invoke, cause each template to be displayed by animation (and loaded for the first time if not loaded) by calling show with the index of the desired template to show. -->    
+<script id="slidetemplates" type="text/hypertag" classes="rel nooverflow">
+    <!-- markup shml -->
+
+    animationtype:"slide",
+    animationtime:Hypertag.GUI.duration*2,
+
+    //change animationtime into css milliseconds
+    __loading__:function(){
+        self.doesOverlay = self.overlaid.indexOf(self.animationtype) !== -1;
+        console.log("self.doesOverlay", self.doesOverlay);
+    },
+
+    transform_none:function(idx, container, elem, lastelem, css){
+        css.transition = "0ms";
+        $(container).css(css);
+    }, 
+
+    transform_slide:function(idx, container, elem, lastelem, css){
+        css.transition = self.animationtime+"ms";
+        $(container).css(css);
+    },
+
+    transform_sweep:function(idx, container, elem, lastelem, css){
+        if(idx {- self._last_idx)
+            $(elem).css({transform:"rotateY(120deg) rotateX(90deg)", transition:"0ms"});
+            
+        else
+            $(elem).css({transform:"rotateY(-120deg) rotateX(90deg)", transition:"0ms"});
+
+        setTimeout(function(){
+            css.transition = self.animationtime+"ms";
+            $(elem).css({transform:"rotateY(0deg) rotateX(0deg)", transition:self.animationtime+"ms"});
+            $(container).css(css);
+        });
+    },
+
+    transform_smush:function(idx, container, elem, lastelem, css){
+        if(idx {- self._last_idx)
+            $(elem).css({transform:"rotateY(180deg)", transition:"0ms"});
+        else
+            $(elem).css({transform:"rotateY(-180deg)", transition:"0ms"});
+
+        setTimeout(function(){
+            css.transition = self.animationtime+"ms";
+            $(elem).css({transform:"rotateY(0deg)", transition:self.animationtime+"ms"});
+            $(container).css(css);
+        });
+    },
+
+    transform_flip:function(idx, container, elem, lastelem, css){
+        if(idx {- self._last_idx)
+            $(elem).css({transform:"rotateY(360deg)", transition:"0ms"});
+        else
+            $(elem).css({transform:"rotateY(-360deg)", transition:"0ms"});
+
+        setTimeout(function(){
+            css.transition = self.animationtime+"ms";
+            $(elem).css({transform:"rotateY(0deg)", transition:self.animationtime+"ms"});
+            $(container).css(css);
+        });
+    },
+
+    transform_roll:function(idx, container, elem, lastelem, css){
+        if(idx {- self._last_idx)
+            $(elem).css({transform:"rotateZ(140deg)", transition:"0ms"});
+        else
+            $(elem).css({transform:"rotateZ(-140deg)", transition:"0ms"});
+
+        setTimeout(function(){
+            css.transition = self.animationtime+"ms";
+            $(elem).css({transform:"rotateZ(0deg)", transition:self.animationtime+"ms"});
+            $(container).css(css);
+        });
+    },
+
+    transform_fade:function(idx, container, elem, lastelem, css){
+        lastelem && $(lastelem).css({opacity:"1", transition:"0ms"});
+        $(elem).css({opacity:"0", transition:"0ms"});
+
+        setTimeout(function(){
+            css.transition = "0ms";
+            lastelem && $(lastelem).css({opacity:"0", transition:self.animationtime+"ms"});
+            $(elem).css({opacity:"1", transition:self.animationtime+"ms"});
+            $(container).css(css);
+        });
+    },
+
+    transform_dissolve:function(idx, container, elem, lastelem, css){
+        lastelem && $(lastelem).css({opacity:"1"});
+        $(elem).css({opacity:"0"});
+
+        setTimeout(function(){
+            css.transition = "0ms";
+            
+            lastelem && $(lastelem).fadeTo(self.animationtime, 0);
+            $(elem).fadeTo(self.animationtime, 1);
+        });
+    },
+    
+    overlaid:["dissolve", "fade"],
+    
+    show:function(idx, disableAnimation){
+
+        // marshall useful state
+        var container = self.child('container');
+        var items = container.child('viewlist').items;
+        var lastelem = items[self._last_idx];
+        var elem = items[idx];
+
+        //Ask the view we're on if it's okay to leave it
+        var should_change = lastelem ? fire(lastelem, '__hidingview__') : true;
+        
+        //if they don't return false, go ahead and change it
+        if(should_change !== false){
+            //IF THE VIEW IN QUESTION HAS NOT YET BEEN LOADED, RELOAD IT
+            elem.isReset && elem.reload();
+
+            // CREATE OBJECT WITH BASE TRANSFORMATION INFO OF LEFT/TOP TO DISPLAY APPROPRIATE VIEW
+            var css = self.vertical ? {top:-idx*self.height} : {left:-idx*self.width};
+            
+            //NO ANIMATION IS NEEDED, TYPICALLY BECAUSE THE VIEW IS BEING RESIZED AND
+            //IT SHOULD BE "RE-LAID-OUT" SO THAT OTHER VIEWS DONT BECOME ACCIDENTALY VISIBLE
+            if(disableAnimation){
+                lastelem && $(lastelem).css({transition:"0ms", transform:"none"});
+                $(elem).css({transition:"0ms", transform:"none"});
+                $(container).css({transition:"0ms", transform:"none"});
+                
+                if(!self.doesOverlay)
+                    $(container).css(css);
+            }
+
+            // CALL APPROPRIATE ANIMATION FUNCTION PASSING RELEVANT STATE
+            else{
+                self['transform_'+self.animationtype](idx, container, elem, lastelem, css);
+                self._last_idx = idx;
+            }
+            
+            //tell the newly shown view that it's visible
+            fire(elem, '__showview__', true);  
+        }  
+
+        // if the view refused to be switched out, return false to inform the caller
+        else
+            return false;
+    },
+
+    onSizing:"%%{self.width, self.height ;; self._last_idx !== undefined && self.show(self._last_idx, true)}",
+    
+    insertView:function(tmplname, idx){
+        var viewlist = self.child('container.viewlist');
+
+        self.sections.insert(tmplname, idx);
+        viewlist.insertItems(tmplname, viewlist.items[idx]);
+
+        self.send('sections');
+    },
+
+    addView:function(tmplname){
+        var viewlist = self.child('container.viewlist');
+
+        self.sections.push(tmplname);
+        viewlist.addItems(tmplname);
+
+        self.send('sections');
+    },
+
+    removeView:function(idx){
+        var viewlist = self.child('container.viewlist');
+
+        self.sections.remove(idx);
+        viewlist.items[idx].remove();
+
+        self.send('sections');
+    },
+
+    removeLast:function(){
+        var viewlist = self.child('container.viewlist');
+
+        self.sections.pop();
+        viewlist.items.last().remove();
+
+        self.send('sections');
+    }
+
+    //this container will be animated left/right or up/down instead of using scrollTop/scrollLeft
+    //for same (which would eliminate the need for the container, if i could use it) because
+    //safari has a weird bug where, if sliding to a non-scrollable view to a scrollable one, no
+    //mousewheel events will be respected until view has changed size again or slid to 
+    //another scrollable view. grrr.
+    <view name="container" class="rel" width="%%{self.parent.width}" height="%%{self.parent.height}">
+
+        <view name="viewlist" 
+              class="rel" 
+              height="%%{self.root.vertical ?? self.root.height, self.root.sections ;; self.root.height * self.root.sections.length :: self.root.height}"
+              width="%%{self.root.vertical ?? self.root.width, self.root.sections ;; self.root.width :: self.root.width * self.root.sections.length}">
+      
+            list:self.root.sections
+    
+            <view autoload="%{false}"
+                  template="[=item=]"
+                  class="[=iftest(self.root.vertical, '', 'cell')=] [=iftest(self.root.overlaid.indexOf(self.root.animationtype) !== -1, 'abs', 'rel')=] top morebottomrounded"
+                  height="%%{self.root.height}"
+                  width="%%{self.root.width}">
+</script>
+    
+    
+<!-- slidelist?? Implemented as a hypertag list, cause each list item to be displayed by animation (and loaded for the first time if not loaded) by calling show with the index of the desired template to show. -->             
+<script id="slidelist" type="text/hypertag" classes="rel nooverflow">
+    slidevertical:false,
+
+    show:function(idx, disableAnimation){
+        self._last_idx = idx;
+        self.items[idx].isReset && self.items[idx].reload();
+        
+        var attrs = self.slidevertical ? {scrollTop:idx*self.height} : {scrollLeft:idx*self.width};
+        animate(self, attrs, disableAnimation ? 0 : Hypertag.GUI.duration);
+    },
+
+    onSizing:"%%{self.width, self.height ;; self._last_idx !== undefined && self.show(self._last_idx, true)}",
+    
+    height:"%%{self.slidevertical ?? self.parent.height ;; self.parent.height :: self.parent.height * self.items.length}",
+    width:"%%{self.slidevertical ?? self.parent.width ;; self.parent.width :: self.parent.width * self.items.length}"
+    
+</script>
+    
+<!-- RenamableField?? A view that contains either a div or input field (name='field'), populated by self.data.item, that will switch between showing the text or input field when the 'renaming' property is toggled. The '__renaming__' delegate will fire() when a successful renaming is finished which can return false to prevent the renaming. -->
+<script id="RenamableField" type="text/hypertag">
+    <!-- markup shml -->
+
+    $field:"[name='field']",
+    
+    stopRename:function(){
+        var val = self.$field.val();
+        
+        if(val != self._oldvalue && self.fire('__renaming__', val, self._oldvalue) !== false)
+            self.item = val;
+        
+        self.reload({renaming:false});
+    },
+    
+    startRename:function(){
+        !self.renaming && self.reload({renaming:true});
+    },
+    
+    __click__:function(){
+        self.startRename();
+    },
+
+    getValue:function(){
+        return self.item;
+    },
+
+    __load__:function(){
+        if(self.renaming){
+            self._oldvalue = self.$field.val();
+            
+            self.$field
+                .keydown(function(e){
+                    if(e.keyCode === 13 || e.keyCode === 27)
+                        self.stopRename();
+                })
+                .blur(function(e){
+                    self.stopRename();
+                }).focus();
+                
+            Hypertag.GUI.focus.setFocused(self.$field[0]);
+        }            
+    }
+
+    <div class="width100">
+        {{if self.renaming}}
+            <input name="field" type="field" value="[=item=]" class="width95">
+        {{else}}
+            <div class="cell width100 bold [=iftest(item, '', 'italic')=]">[=item || self.default || ''=]
+        {{/if}}
+</script>
+        
+<!-- ModalPopup?? A mechanism that will, by undergoing reload(), present both a faded background (interrupting clicks) and a central area. In the central area, a template you specify in the 'show' property will be invoked. That template can close the popup by calling self.lookuptemplate('ModalPopup').reset() which will find the ModalPopup above it and reset() it. -->
+<script id="ModalPopup" type="text/hypertag">    
+    <!-- markup shml -->
+    
+    autoload:false,
+
+    classes:"abs hidden center",
+    height:"%%{self.parent.height}",
+    width:"%%{self.parent.width}",
+    
+    width_ratio:1.5,
+   
+    __load__:function(){
+        var $content = $(self);
+        
+        $(self).removeClass("hidden");
+        
+        $content.css({transform:"rotateX(90deg)"});
+            
+        setTimeout(function(){
+            $content.css({transform:"rotateX(0deg)", transition:"500ms"});
+        });
+    },
+
+    __reset__:function(){
+        var $content = $(self);
+        
+        $content.css({transform:"rotateX(90deg)", transition:"200ms"});
+        
+        setTimeout(function(){
+            $(self).addClass("hidden");
+            self.forcereset();
+        }, 200);
+        
+        return false;
+    }
+
+    <fullview class="abs vertBlackGradient" style="opacity:0.4;">
+
+    <div name="content" class="abs width100">
+
+        <view width="%%{self.parent.width}" 
+              height="%%{self.parent.height}" 
+              class="table middle" 
+              __click__="!self.root.closeable && self.root.reset()">
+
+            <view template="%{self.lookup('show')}" __click__="return;"
+                class="rel padded rounded fgwhite vertBlackGradient windowshadowed_active center middle bigger"
+                width="%%{self.parent.width;;value/self.root.width_ratio}"
+                left="%%{self.parent.width;;(value-(value/self.root.width_ratio))/2}">
+</script>
+
+<!-- a trait to make a keyselectable lazylist wrap from front-to-end and vice versa -->
+<script id="lazylooped" type="text/hypertag">
+    keyselectable:true,
+    lazy:true,
+    
+    __scrollbegin__:function(){
+        self.lazyreversed = true;
+        self.reload();
+        self.items.last().setSelection();
+    },
+    
+    __scrollend__:function(){
+        self.lazyreversed = false;
+        self.reload();
+        self.items[0].setSelection();
+    }
+</script>
+    
+<script id="ScrollBoundaryEvents" type="text/hypertag">
+    __init__:function(){
+        $(self).scroll(self.checkForScrollBoundaries);
+        
+        if(self.addEventListener){
+            /* self.addEventListener('DOMMouseScroll', self.updateVisibleItems, false); */
+            self.addEventListener('mousewheel', self.checkForScrollBoundaries, false);
+        }
+        
+        else
+            self.onmousewheel = self.checkForScrollBoundaries;
+
+        /* when self.optimized[0] (ie. dimension, width, height) of our parent changes, reupdate what's visible */
+        listen(self, self.lazy, function(){
+            self.checkForScrollBoundaries(); 
+        });
+    },
+    
+    deltaEventThreshold:60,
+    
+    _scrollBoundaryEventCounter:false,
+    
+    __reset__:function(){
+        clearTimeout(self.finishWaitingForScroll);
+        self._scrollBoundaryEventCounter = false;
+        self._scrollBoundaryDirection = undefined;
+    },
+    
+    finishWaitingForScroll:function(){
+        //console.log("finishWaitingForScroll: self._scrollBoundaryEventCounter, self.deltaEventThreshold", self._scrollBoundaryEventCounter, self.deltaEventThreshold);
+        if(self._scrollBoundaryEventCounter !== false && self._scrollBoundaryEventCounter > self.deltaEventThreshold){
+            if(self._scrollBoundaryDirection)
+                self.fire("__scrollbegin__");
+            else
+                self.fire("__scrollend__");
+        }
+            
+        self._scrollBoundaryEventCounter = false;
+        self._scrollBoundaryDirection = undefined;
+
+    },
+    
+    checkForScrollBoundaries:function(event){
+        //get delta - if down , check against down version, if up, check against up version
+        
+        if(event instanceof WheelEvent){
+            if(self._scrollBoundaryDirection === undefined){
+                if(event.wheelDelta {- 0)
+                    self._scrollBoundaryDirection = false;
+                else
+                    self._scrollBoundaryDirection = true;
+                return;
+            }
+            
+            else if((self._scrollBoundaryDirection === true && event.wheelDelta {- 0) || (self._scrollBoundaryDirection === false && event.wheelDelta -} 0)){
+                clearTimeout(self.finishWaitingForScroll);
+                self._scrollBoundaryDirection = undefined;
+                self._scrollBoundaryEventCounter = false;
+                return;
+            }
+        }
+        
+        if(self._scrollBoundaryDirection === false && self.scrollTop+self.offsetHeight >= self.scrollHeight && self.items[self.items.length-1].ELEMENT_NODE){
+            if(self._scrollBoundaryEventCounter !== false)
+                self._scrollBoundaryEventCounter += 1;
+
+            else{
+                self._scrollBoundaryEventCounter = 0;
+                setTimeout(self.finishWaitingForScroll, 1000);
+            }
+        }
+        
+        else if(self._scrollBoundaryDirection === true && self.scrollTop === 0){
+            if(self._scrollBoundaryEventCounter !== false){
+                self._scrollBoundaryEventCounter += 1;
+            }
+
+            else{
+                self._scrollBoundaryEventCounter = 0;
+                setTimeout(self.finishWaitingForScroll, 1000);
+            }
+        }
+
+        else{
+            self._scrollBoundaryDirection = undefined;
+            self._scrollBoundaryEventCounter = false;
+        }
+    }
+</script>
+    
+<!-- a trait which will call the function provided to the trait on hover - but in 
+     such a way as to reject accidental double activation -->
+<script id="HoverDoubleClickRejection" type="text/hypertag">
+    prevent_double_activation:false,
+    isOverUs:false,
+    
+    __hover__:function(state, e){
+        self.isOverUs = state;
+        
+        /* to prevent accidental opens */
+        if(self.prevent_double_activation)
+            return;
+        
+        self.prevent_double_activation = true;            
+        
+        setTimeout(function(){
+            if(self.isOverUs)
+                self.HoverDoubleClickRejection$(e);
+        }, 150); 
+        
+        setTimeout(function(){
+            self.prevent_double_activation = false;
+        }, Hypertag.Runtime.dragdelay);
+    }
+</script>
+    
+<script type='text/javascript'>
+     listen(Hypertag, '__init__', function(){
+         
+         //this will allow a input field to have default provided until the user provides input
+         //it also exposes a "getValue" method which will return an empty string if the default
+         //value is still present. Short and simple
+         
+         //NOTE this supports password fields by flipping the type to field when no user input present
+         Hypertag.Runtime.addCSSTraits(".defaultfield", function(self){
+             var $self = $(self);
+             var default_value = self.getAttribute('default');
+             
+             self._isPassword = self.getAttribute('type') == 'password';
+             
+             self.setDefault = function(){
+                 self._isPassword && self.setAttribute('type', 'field');
+                 $self.val(default_value).addClass("fggrey italic");
+             }
+    
+             $self.focus(function(){
+                 if($self.val() == default_value){
+                     self._isPassword && self.setAttribute('type', 'password');
+                     $self.val('').removeClass("fggrey italic");
+                 }
+             }).blur(function(){
+                 if(!$self.val().trim()){
+                     self._isPassword && self.setAttribute('type', 'field');
+                     $self.val(default_value).addClass("fggrey italic");
+                 }
+             });
+
+             self.getValue = function(){
+                 var val = $self.val();
+                 return val == default_value ? "" : val;
+             }
+
+             self.setValue = function(val){
+                if(val == '') 
+                    self.setDefault();
+                else
+                    $self.val(val).removeClass("fggrey italic");
+             }
+             
+             !$self.val().trim() && self.setDefault();
+         });   
+     })
+</script>
+
+<script id="DebugFlash" type="text/hypertag">
+    classes:"ztop abs fixed orange hidden transparent",
+    SizedToWindow$:true,
+    onDebugger:"%%{Hypertag.Debugger.__error__, Hypertag.Debugger.__warning__, Hypertag.Debugger.__comment__ ;; self.flash()}",
+    flash:function(){
+        $self = $(self);
+        $self.removeClass('hidden');
+        $self.css("opacity", 0.5);
+        $self.animate({opacity:0}, {duration:Hypertag.GUI.duration+10, complete:function(){
+            $self.addClass('hidden');
+        }});
+    }
+</script>
