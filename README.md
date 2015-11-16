@@ -38,10 +38,10 @@ In 2014 the project was ressurected and is currently being refactored into a Nam
 * Multi-language support
 
 ##### Development Path
-* Update engine
 * Refactor old code into cell-based list output
 * Inspector pattern with tabbed inspector panes
 * pane 1 = {title, description, text} populaing fields and textarea
 * pane 2 = fnord word list with feq count
 * pane 3 = proximal noun/adj display
 * pane 4 = d3 histogram
+* Ajaxy request for sample data, saving user data to localstorage

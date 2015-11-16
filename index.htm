@@ -14,7 +14,7 @@
 	<!-- hypertag Tempates runtime -->
     <link href="common/hypertag/verbs.css" media="all" rel="stylesheet" type="text/css"></link>
     <script src="common/hypertag/Hypertag.min.js" type="text/javascript"></script>
-    <script url="common/hypertag/builtins.hyp" type="text/javascript"></script>
+    <script url="common/hypertag/builtins.hyp" type="library/hypertag"></script>
 
     <!-- Fnordometer Code -->
     <link rel='stylesheet' href='fnord/fnordometer.css'></link>
@@ -23,39 +23,76 @@
 
 </head>
 <script type="text/javascript"> 
-    // A wrapper for localStorage that gives us an objet-aware storage/retrevial mechanism
-    var localstore = {};
-    localstore.set = function(key,item){
-        try{ var processed_item = JSON.stringify(item) }
-        catch(e){}//nothing needed here. if it failed we have a string
-        localStorage.setItem(key, processed_item ? processed_item : item);
-    }
-    localstore.get = function(key){
-        var item = localStorage.getItem(key);
-        try{ item = JSON.parse(item); }
-        catch(e){}//nothing needed here. if it failed we just get a string
-        return item;
-    }
-    localstore.setItem = localStorage.setItem;
-    localstore.getItem = localStorage.getItem;
+    
 </script>
 
 <script id="application" type="text/hypertag">
     <!-- dialect shml -->
     __init__:function(){
-        // make a new fnordometer and put it on this top level container
+        /* An extention for localStorage that gives it an objet-aware storage/retrevial mechanisms */
+        (function(){
+            var proto = Object.getPrototypeOf(localStorage);
+            proto.set = function(key,item){
+                var processed_item = false;
+                if(item.constructor == RegExp || item.constructor == Function) 
+                    processed_item = item.toString();
+                else try{ processed_item = JSON.stringify(item);} catch(e){}
+                localStorage.setItem(key, processed_item ? processed_item : item);
+            };
+            proto.get = function(key){
+                var item = localStorage.getItem(key);
+                if(item && RegExp(/^\/.*\/\D{0,4}/gi).test(item))/*is it a RegExp?*/
+                    item = new RexExp(item);
+                if(item && RegExp(/^function\s\(.*\}$/gi).test(item))/*is it a Function?*/
+                    item = eval(item);
+                else try{ item = JSON.parse(item); } catch(e){}
+                return item;
+            };
+        })();
+        
+        /* make a new fnordometer and put it on this top level container */
         self.fnordometer = Fnordometer();
+        
+        /* make an API for storage/retrieval of texts in localstorage  */
+        (function(){
+            var key = "usertexts";
+            var proto = Object.getPrototypeOf(localStorage);
+            proto.textsGet = function(){
+                return localStorage.get(key);
+            };
+            proto.textsPush   = function(item){
+                localStorage.set(key,localStorage.get(key).push(item));
+            };
+            proto.textsConcat  = function(items){
+                if(items.prototype == Array){
+                    localStorage.set(localStorage.get(key).concat(items));
+                    return true;
+                } else return false;
+            };
+            proto.textsLength = function(){localStorage.get(key).length;};
+            proto.textsItem   = function(index){
+                if(index.constructor == Number){
+                    return localStorage.get(key)[index];
+                } else return false;
+            };
+        })();
     }
-    <view name="texttoanalyzebox">
+    <view name="texttoanalyzebox" class="cornflowerblue">
     
-    <view name="resultbox">
+    <view name="resultbox" class="lightskyblue">
     
-    <view name="textlist">
+    <view name="textlist" 
+          class="rel scrollable deepskyblue"
+          height="%%{self.parent.height;;value-self.offsetTop}"
+          width="150">
         list:function(){
             // Check for the presence of user data.  If none we use the default examples
-            var texts = localstore.get("usertexts");
+            var texts = localStorage.get("usertexts");
             if(typeof texts == Array) return texts;
-            else return fnordometerspeeches;
+            else {
+                localStorage.set("usertexts", fnordometerspeeches);
+                return fnordometerspeeches;
+            }
         },
         __click__:function(item){
             console.log(item.data.text);
@@ -68,7 +105,7 @@
 
 
 <body>
-    <div class="hypertag" template="application"></div>
+    <div class="hypertag teal" template="application" traits="SizedToWindow" />
 </body>
 
 </html>
