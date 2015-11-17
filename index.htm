@@ -19,63 +19,15 @@
     <!-- Fnordometer Code -->
     <link rel='stylesheet' href='fnord/fnordometer.css'></link>
     <script type='text/javascript' src='fnord/fnordometerspeeches.js'></script>
+    <script type='text/javascript' src='fnord/utils.js'></script>
     <script type='text/javascript' src='fnord/fnordometer.js'></script>
 
 </head>
-<script type="text/javascript"> 
-    
-</script>
-
 <script id="application" type="text/hypertag">
     <!-- dialect shml -->
     __init__:function(){
-        /* An extention for localStorage that gives it an objet-aware storage/retrevial mechanisms */
-        (function(){
-            var proto = Object.getPrototypeOf(localStorage);
-            proto.set = function(key,item){
-                var processed_item = false;
-                if(item.constructor == RegExp || item.constructor == Function) 
-                    processed_item = item.toString();
-                else try{ processed_item = JSON.stringify(item);} catch(e){}
-                localStorage.setItem(key, processed_item ? processed_item : item);
-            };
-            proto.get = function(key){
-                var item = localStorage.getItem(key);
-                if(item && RegExp(/^\/.*\/\D{0,4}/gi).test(item))/*is it a RegExp?*/
-                    item = new RexExp(item);
-                if(item && RegExp(/^function\s\(.*\}$/gi).test(item))/*is it a Function?*/
-                    item = eval(item);
-                else try{ item = JSON.parse(item); } catch(e){}
-                return item;
-            };
-        })();
-        
         /* make a new fnordometer and put it on this top level container */
         self.fnordometer = Fnordometer();
-        
-        /* make an API for storage/retrieval of texts in localstorage  */
-        (function(){
-            var key = "usertexts";
-            var proto = Object.getPrototypeOf(localStorage);
-            proto.textsGet = function(){
-                return localStorage.get(key);
-            };
-            proto.textsPush   = function(item){
-                localStorage.set(key,localStorage.get(key).push(item));
-            };
-            proto.textsConcat  = function(items){
-                if(items.prototype == Array){
-                    localStorage.set(localStorage.get(key).concat(items));
-                    return true;
-                } else return false;
-            };
-            proto.textsLength = function(){localStorage.get(key).length;};
-            proto.textsItem   = function(index){
-                if(index.constructor == Number){
-                    return localStorage.get(key)[index];
-                } else return false;
-            };
-        })();
     }
     <view name="texttoanalyzebox" class="cornflowerblue">
     
@@ -102,8 +54,6 @@
                  class="fggreen blue">
                 [=title=]
 </script>
-
-
 <body>
     <div class="hypertag teal" template="application" traits="SizedToWindow" />
 </body>
