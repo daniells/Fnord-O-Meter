@@ -1,5 +1,5 @@
 # Fnord-O-Meter 
-###### A splice of Kerry Thornley, Lloyd deMausse, and Issac Asimov
+###### A confluence of Robert Wilson, Lloyd deMausse, and Issac Asimov
 
 #### What
 
@@ -9,11 +9,11 @@ _Group fantasy analysis_ is a tool central to the pseudoscientific discipline kn
 
 Psychohistory purports to apply statistical methodology to social and political sciences, and thus predict the political future. No definitive work on this methodology has ever been published. 
 
-Psychohistory sounds suspiciously like the central conceit of Isaac Asmimovs's [Foundation](https://en.wikipedia.org/wiki/Foundation_series) novels.  Asmimov also called his fictional science [Psychohistory](https://en.wikipedia.org/wiki/Psychohistory_%28fictional%29).  The first Foundation novel was published in 1942.
+Psychohistory sounds suspiciously like the central conceit of Isaac Asimovs's [Foundation](https://en.wikipedia.org/wiki/Foundation_series) novels.  Asimov also called his fictional science [Psychohistory](https://en.wikipedia.org/wiki/Psychohistory_%28fictional%29).  The first Foundation novel was published in 1942.
 
 Central to the concept of _group fantasy analysis_ is the hypothesis that hypnotically-boring political speeches contain emotive words that communicate unconscious content. When strung together as sentences these _group fantasy words_ express the true ideology of the speaker. 
 
-This is suspiciously like the idea of the invisible word [FNORD!](https://en.wikipedia.org/wiki/Fnord#Origins) first coined by [Kerry Thornley](https://en.wikipedia.org/wiki/Kerry_Wendell_Thornley) in 1965.
+This also sounds much the idea of the invisible word [FNORD!](https://en.wikipedia.org/wiki/Fnord#Origins) first coined by [Kerry Thornley](https://en.wikipedia.org/wiki/Kerry_Wendell_Thornley) in 1965, and popularized by Robert Anton Wilson in 1975.
 
 #### Why
 
